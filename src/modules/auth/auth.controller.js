@@ -25,7 +25,7 @@ export const confirmEmail = asyncHandler(async (req, res, next) => {
 export const signIn = asyncHandler(async (req, res, next) => {
   const { userName, password } = req.body;
   const token = await authService.signIn(userName, password);
-  console.log(token);
+
   res.cookie('token', token, {
     httpOnly: true,
     secure: process.env.MODE == 'PROD'

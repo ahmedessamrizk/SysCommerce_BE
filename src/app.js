@@ -4,6 +4,7 @@ import { connectDB } from '../DB/connection.js';
 import indexRouter from './modules/index.router.js';
 import { globalErrorHandling } from './utils/errorHandlingService.js';
 import cookieParser from 'cookie-parser';
+import { makeAdmin } from './utils/makeAdmin.js'
 
 export const appRouter = app => {
   app.use(cookieParser());
@@ -14,8 +15,8 @@ export const appRouter = app => {
   //connect database
   connectDB();
 
-  //superAdmins
-  // superAdmin([process.env.SUPERADMINONE, process.env.SUPERADMINTWO, process.env.SUPERADMINTHREE]);
+  //Make Super Admin
+  makeAdmin();
 
   //Api Setup
   app.use(process.env.BASEURL, indexRouter);
