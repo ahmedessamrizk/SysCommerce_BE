@@ -7,7 +7,7 @@ export const makeAdmin = async () => {
   const user = await usersService.getUser({ email }, 'email');
   if (!user) {
     await usersService.createUser({
-      userName: 'superAdmin',
+      userName: process.env.SUPER_ADMIN_USERNAME,
       email: process.env.SUPER_ADMIN_EMAIL,
       password: await bcrypt.hash(
         process.env.SUPER_ADMIN_PASSWORD,

@@ -36,14 +36,6 @@ export const signInSchema = {
       .required('userName is required')
       .min(3, 'userName must be at least 3 characters')
       .max(20, 'userName cannot exceed 20 characters'),
-    password: yup
-      .string()
-      .required('password is required')
-      .matches(
-        new RegExp(
-          /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
-        ),
-        'password must be minimum eight, at least one uppercase letter, one lowercase letter, one number and one special character'
-      )
+    password: yup.string().required('password is required')
   })
 };
