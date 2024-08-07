@@ -6,9 +6,10 @@ export const validation = schema => {
   return asyncHandler(async (req, res, next) => {
     try {
       const errList = [];
+
       await Promise.all(
         dataMethods.map(async method => {
-          if (schema[method]) {
+          if (schema && schema[method]) {
             try {
               await schema[method].validate(req[method], { abortEarly: false });
             } catch (validationError) {

@@ -27,6 +27,7 @@ router.get(
 
 router.delete(
   '/:id',
+  validation(usersValidators.removeUserSchema),
   auth([roles.Admin, roles.SuperAdmin]),
   usersController.removeUser
 );

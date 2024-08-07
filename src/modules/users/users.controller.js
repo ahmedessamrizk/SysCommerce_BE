@@ -1,3 +1,4 @@
+import { roles } from '../../middleware/auth.js';
 import { createResponse } from '../../utils/createResponse.js';
 import { asyncHandler } from '../../utils/errorHandlingService.js';
 import * as usersService from './users.service.js';
@@ -17,6 +18,6 @@ export const getUsers = asyncHandler(async (req, res) => {
 });
 
 export const removeUser = asyncHandler(async (req, res) => {
-  await usersService.removeUser(req.params.id);
+  await usersService.removeUser(req.params.id, roles.User);
   return res.status(204).json(createResponse(204));
 });

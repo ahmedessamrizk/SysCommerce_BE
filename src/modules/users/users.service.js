@@ -42,17 +42,17 @@ export const updateUser = async (
   return user;
 };
 
-export const getUsers = async query => {
+export const getUsers = async (query, role = roles.User) => {
   const { limit, skip } = paginate(query.page, query.size);
   const users = await userModel
-    .find({ isConfirmed: true })
+    .find({ isConfirmed: true, role })
     .limit(limit)
     .skip(skip)
     .select(privateData);
   return users;
 };
 
-export const removeUser = async id => {
+export const removeUser = async (id, roleToDelete) => {
   const user = await getUser({ _id: id, isConfirmed: true });
 
   //Check if user exists.
@@ -60,11 +60,14 @@ export const removeUser = async id => {
     throw new Error('Invalid user id', { cause: 404 });
   }
 
-  //Check if the role to be deleted is user.
-  if (user.role !== roles.User) {
-    throw new Error('You are not authorized to delete this user', {
-      cause: 403
-    });
+  //Check if the role to be deleted is as expected.
+  if (user.role !== roleToDelete) {
+    throw new Error(
+      `The user being deleted does not match the expected role for this endpoint`,
+      {
+        cause: 403
+      }
+    );
   }
   await userModel.findByIdAndDelete(id);
 };
@@ -82,4 +85,15 @@ export const checkValidUser = async (email, userName) => {
   }
 
   return { status: true };
+};
+
+export const updateRole = async (id, role) => {
+  const user = await getUser({ _id: id, isConfirmed: true });
+  if (!user) {
+    throw new Error('Invalid user id', { cause: 404 });
+  }
+
+  return await userModel
+    .findByIdAndUpdate(id, { role }, { new: true })
+    .select('userName role');
 };
