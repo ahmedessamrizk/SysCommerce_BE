@@ -28,7 +28,8 @@ export const signIn = asyncHandler(async (req, res, next) => {
 
   res.cookie('token', token, {
     httpOnly: true,
-    secure: process.env.MODE == 'PROD'
+    secure: process.env.MODE == 'PROD',
+    sameSite: 'Strict'
   });
   return res.status(200).json(createResponse(200));
 });
