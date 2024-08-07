@@ -10,20 +10,13 @@ export const signUp = async req => {
   email = email.toLowerCase();
 
   //check if email or username already exists
-  const checkEmail = await usersService.getUser({ email }, 'email');
-  if (checkEmail) {
-    throw new Error('Email already exists', { cause: 409 });
+  const valid = await usersService.checkValidUser(email, userName);
+  if (!valid.status) {
+    throw new Error(valid.message, { cause: valid.cause });
   }
-  const checkUserName = await usersService.getUser({ userName }, 'userName');
-  if (checkUserName) {
-    throw new Error('userName already exists', { cause: 409 });
-  }
-
-  //hash password
-  password = await bcrypt.hash(password, +process.env.SALTROUND);
 
   //check if email is valid
-  if (!sendEmailtoUser(req)) {
+  if (!(await sendEmailtoUser(req))) {
     throw new Error('Invalid to send email, please try again', { cause: 400 });
   }
   return usersService.createUser({ email, userName, password });
@@ -61,7 +54,7 @@ export const confirmEmail = async token => {
 
 export const signIn = async (userName, password) => {
   const user = await usersService.getUser(
-    { userName },
+    { userName: userName.toLowerCase() },
     'userName isConfirmed password'
   );
 

@@ -1,10 +1,27 @@
 import { userModel } from '../../../DB/models/user.model.js';
 import { roles } from '../../middleware/auth.js';
 import { paginate } from '../../utils/pagination.js';
+import bcrypt from 'bcryptjs';
 
 const privateData = '-password -__v -isConfirmed';
 
 export const createUser = async user => {
+  let { email, userName, password } = user;
+
+  userName = userName.toLowerCase();
+  email = email.toLowerCase();
+
+  //check if email or username already exists
+  const valid = await checkValidUser(email, userName);
+  if (!valid.status) {
+    throw new Error(valid.message, { cause: valid.cause });
+  }
+
+  //hash password
+  password = await bcrypt.hash(password, +process.env.SALTROUND);
+
+  Object.assign(user, { email, userName, password });
+
   return await userModel.create(user);
 };
 
@@ -50,4 +67,19 @@ export const removeUser = async id => {
     });
   }
   await userModel.findByIdAndDelete(id);
+};
+
+export const checkValidUser = async (email, userName) => {
+  //check if email or username already exists
+  const checkEmail = await getUser({ email }, 'email');
+  if (checkEmail) {
+    return { status: false, cause: 409, message: 'Email already exists' };
+  }
+
+  const checkUserName = await getUser({ userName }, 'userName');
+  if (checkUserName) {
+    return { status: false, cause: 409, message: 'userName already exists' };
+  }
+
+  return { status: true };
 };
