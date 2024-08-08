@@ -4,13 +4,18 @@ import { connectDB } from '../DB/connection.js';
 import indexRouter from './modules/index.router.js';
 import { globalErrorHandling } from './utils/errorHandlingService.js';
 import cookieParser from 'cookie-parser';
-import { makeAdmin } from './utils/makeAdmin.js'
+import { makeAdmin } from './utils/makeAdmin.js';
 
 export const appRouter = app => {
   app.use(cookieParser());
   app.use(express.json({}));
   app.use(express.urlencoded({ extended: true }));
-  app.use(cors({}));
+  app.use(
+    cors({
+      origin: '*',
+      credentials: true
+    })
+  );
 
   //connect database
   connectDB();
