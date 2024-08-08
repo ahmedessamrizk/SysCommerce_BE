@@ -18,6 +18,11 @@ export const getUsers = asyncHandler(async (req, res) => {
 });
 
 export const removeUser = asyncHandler(async (req, res) => {
-  await usersService.removeUser(req.params.id, roles.User);
-  return res.status(204).json(createResponse(204));
+  await usersService.removeUser(req.params.id, roles.User, true);
+  return res.status(200).json(createResponse(200));
+});
+
+export const unRemoveUser = asyncHandler(async (req, res) => {
+  await usersService.removeUser(req.params.id, roles.User, false);
+  return res.status(200).json(createResponse(200));
 });

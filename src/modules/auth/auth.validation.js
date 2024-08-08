@@ -1,26 +1,30 @@
 import yup from 'yup';
 
 export const signupSchema = {
-  body: yup.object().shape({
-    userName: yup
-      .string()
-      .required('userName is required')
-      .min(3, 'userName must be at least 3 characters')
-      .max(20, 'userName cannot exceed 20 characters'),
-    email: yup
-      .string()
-      .email('Invalid email format')
-      .required('email is required'),
-    password: yup
-      .string()
-      .required('password is required')
-      .matches(
-        new RegExp(
-          /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
-        ),
-        'password must be minimum eight, at least one uppercase letter, one lowercase letter, one number and one special character'
-      )
-  })
+  body: yup
+    .object()
+    .shape({
+      userName: yup
+        .string()
+        .required('userName is required')
+        .min(3, 'userName must be at least 3 characters')
+        .max(20, 'userName cannot exceed 20 characters'),
+      email: yup
+        .string()
+        .email('Invalid email format')
+        .required('email is required'),
+      password: yup
+        .string()
+        .required('password is required')
+        .matches(
+          new RegExp(
+            /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
+          ),
+          'password must be minimum eight, at least one uppercase letter, one lowercase letter, one number and one special character'
+        )
+    })
+    .noUnknown(true, 'Unknown field in request body')
+    .strict()
 };
 
 export const confirmEmailSchema = {

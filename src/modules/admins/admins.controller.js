@@ -9,7 +9,7 @@ export const createAdmin = asyncHandler(async (req, res) => {
 });
 
 export const getAdmins = asyncHandler(async (req, res) => {
-  const admins = await adminsService.getAdmins(req.query);
+  const admins = await adminsService.getAdmins(req.query, req.user);
   return res
     .status(200)
     .json(createResponse(200, { total: admins.length, admins }));
@@ -21,6 +21,11 @@ export const updateRole = asyncHandler(async (req, res) => {
 });
 
 export const removeAdmin = asyncHandler(async (req, res) => {
-  await adminsService.removeAdmin(req.params.id);
-  return res.status(204).json(createResponse(204));
+  await adminsService.removeAdmin(req.params.id, true);
+  return res.status(200).json(createResponse(200));
+});
+
+export const unRemoveAdmin = asyncHandler(async (req, res) => {
+  await adminsService.removeAdmin(req.params.id, false);
+  return res.status(200).json(createResponse(200));
 });

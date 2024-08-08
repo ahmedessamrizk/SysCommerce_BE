@@ -27,11 +27,18 @@ router.patch(
   adminsController.updateRole
 );
 
-router.delete(
-  '/:id',
+router.patch(
+  '/:id/remove',
   validation(adminsValidators.removeAdminSchema),
   auth([roles.SuperAdmin]),
   adminsController.removeAdmin
+);
+
+router.patch(
+  '/:id/unremove',
+  validation(adminsValidators.removeAdminSchema),
+  auth([roles.SuperAdmin]),
+  adminsController.unRemoveAdmin
 );
 
 export default router;

@@ -25,11 +25,18 @@ router.get(
   usersController.getUsers
 );
 
-router.delete(
-  '/:id',
+router.patch(
+  '/:id/remove',
   validation(usersValidators.removeUserSchema),
   auth([roles.Admin, roles.SuperAdmin]),
   usersController.removeUser
+);
+
+router.patch(
+  '/:id/unremove',
+  validation(usersValidators.removeUserSchema),
+  auth([roles.Admin, roles.SuperAdmin]),
+  usersController.unRemoveUser
 );
 
 export default router;

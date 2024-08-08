@@ -23,7 +23,10 @@ export const auth = (accessRoles = []) => {
       }
 
       //check if user is exist
-      const user = await getUser({ _id: decoded.id }, 'userName role');
+      const user = await getUser(
+        { _id: decoded.id, isDeleted: { $in: [false, null] } },
+        'userName role'
+      );
       if (!user) {
         return res
           .status(404)

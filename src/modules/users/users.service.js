@@ -42,17 +42,17 @@ export const updateUser = async (
   return user;
 };
 
-export const getUsers = async (query, role = roles.User) => {
+export const getUsers = async (query, role = roles.User, select = "") => {
   const { limit, skip } = paginate(query.page, query.size);
   const users = await userModel
-    .find({ isConfirmed: true, role })
+    .find({ role, isConfirmed: true })
     .limit(limit)
     .skip(skip)
-    .select(privateData);
+    .select(privateData + select);
   return users;
 };
 
-export const removeUser = async (id, roleToDelete) => {
+export const removeUser = async (id, roleToDelete, isDeleted = true) => {
   const user = await getUser({ _id: id, isConfirmed: true });
 
   //Check if user exists.
@@ -69,7 +69,7 @@ export const removeUser = async (id, roleToDelete) => {
       }
     );
   }
-  await userModel.findByIdAndDelete(id);
+  await userModel.findByIdAndUpdate(id, { isDeleted });
 };
 
 export const checkValidUser = async (email, userName) => {

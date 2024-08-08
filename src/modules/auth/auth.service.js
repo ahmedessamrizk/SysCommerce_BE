@@ -55,7 +55,7 @@ export const confirmEmail = async token => {
 export const signIn = async (userName, password) => {
   const user = await usersService.getUser(
     { userName: userName.toLowerCase() },
-    'userName isConfirmed password'
+    'userName isDeleted isConfirmed password'
   );
 
   //check if userName and password not match
@@ -65,6 +65,10 @@ export const signIn = async (userName, password) => {
   //check if email is confirmed
   if (!user?.isConfirmed) {
     throw new Error('Please confirm your email before login', { cause: 403 });
+  }
+  //check if account is active
+  if (user?.isDeleted) {
+    throw new Error('Account is deleted', { cause: 403 });
   }
 
   //create token
