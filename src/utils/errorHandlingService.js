@@ -20,7 +20,7 @@ export const globalErrorHandling = (err, req, res, next) => {
     } else {
       return res
         .status(err['cause'] || 500)
-        .json(createResponse(err['cause'] || 500, err.message));
+        .json(createResponse(err['cause'] || 500, null, err.message));
     }
   }
 };
