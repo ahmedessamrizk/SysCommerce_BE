@@ -13,8 +13,8 @@ export const logout = asyncHandler(async (req, res) => {
 
 export const getUsers = asyncHandler(async (req, res) => {
   const { page, size } = req.query;
-  const users = await usersService.getUsers({ page, size });
-  return res.json(createResponse(200, { total: users.length, users }));
+  const result = await usersService.getUsers({ page, size });
+  return res.json(createResponse(200, result));
 });
 
 export const removeUser = asyncHandler(async (req, res) => {

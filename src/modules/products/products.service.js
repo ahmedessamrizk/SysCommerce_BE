@@ -32,16 +32,21 @@ export const getProducts = async query => {
   }
 
   const { limit, skip } = paginate(query.page, query.size);
-  const products = await productModel
-    .find(send_query)
-    .limit(limit)
-    .skip(skip)
-    .populate([
-      { path: 'category', select: 'name slug' },
-      { path: 'createdBy', select: 'userName email' }
-    ]);
+  const [products, totalProducts] = await Promise.all([
+    productModel
+      .find(send_query)
+      .limit(limit)
+      .skip(skip)
+      .populate([
+        { path: 'category', select: 'name slug' },
+        { path: 'createdBy', select: 'userName email' }
+      ]),
+    productModel.countDocuments()
+  ]);
 
-  return products;
+  // Calculate the number of pages available
+  const totalPages = Math.ceil(totalProducts / limit);
+  return { total: products.length, totalPages, products };
 };
 
 export const updateProduct = async (id, product, currUser) => {

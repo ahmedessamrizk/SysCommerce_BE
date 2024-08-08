@@ -39,13 +39,24 @@ export const create = async (category, currUser) => {
 export const getCategories = async query => {
   const { limit, skip } = paginate(query.page, query.size);
 
-  const categories = await categoryModel
-    .find({ type: 0 })
-    .limit(limit)
-    .skip(skip)
-    .select(privateData);
+  const [categories, totalCategories] = await Promise.all([
+    categoryModel
+      .find({ type: 0 })
+      .limit(limit)
+      .skip(skip)
+      .select(privateData),
+    categoryModel.countDocuments({ type: 0 })
+  ]);
 
-  return await reformatCategories(categories);
+  // Calculate the number of pages available
+  const totalPages = Math.ceil(totalCategories / limit);
+
+  const formatedCategories = await reformatCategories(categories);
+  return {
+    total: categories.length,
+    totalPages,
+    categories: formatedCategories
+  };
 };
 
 export const updateCategory = async (id, category) => {

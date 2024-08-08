@@ -8,10 +8,8 @@ export const createProduct = asyncHandler(async (req, res) => {
 });
 
 export const getProducts = asyncHandler(async (req, res) => {
-  const products = await productsService.getProducts(req.query);
-  return res
-    .status(200)
-    .json(createResponse(200, { total: products.length, products }));
+  const result = await productsService.getProducts(req.query);
+  return res.status(200).json(createResponse(200, result));
 });
 
 export const updateProduct = asyncHandler(async (req, res) => {

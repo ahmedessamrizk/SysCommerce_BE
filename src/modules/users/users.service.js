@@ -42,14 +42,21 @@ export const updateUser = async (
   return user;
 };
 
-export const getUsers = async (query, role = roles.User, select = "") => {
+export const getUsers = async (query, role = roles.User, select = '') => {
   const { limit, skip } = paginate(query.page, query.size);
-  const users = await userModel
-    .find({ role, isConfirmed: true })
-    .limit(limit)
-    .skip(skip)
-    .select(privateData + select);
-  return users;
+  // Start fetching users and total count concurrently
+  const [users, totalUsers] = await Promise.all([
+    userModel
+      .find({ role, isConfirmed: true })
+      .limit(limit)
+      .skip(skip)
+      .select(privateData + select),
+    userModel.countDocuments({ role, isConfirmed: true })
+  ]);
+
+  // Calculate the number of pages available
+  const totalPages = Math.ceil(totalUsers / limit);
+  return { total: users.length, totalPages, admins: users };
 };
 
 export const removeUser = async (id, roleToDelete, isDeleted = true) => {

@@ -12,12 +12,8 @@ export const createCategory = asyncHandler(async (req, res) => {
 });
 
 export const getCategories = asyncHandler(async (req, res) => {
-  const categories = await categoriesService.getCategories(req.query);
-  return res.status(200).json(
-    createResponse(200, {
-      categories
-    })
-  );
+  const result = await categoriesService.getCategories(req.query);
+  return res.status(200).json(createResponse(200, result));
 });
 
 export const updateCategory = asyncHandler(async (req, res) => {

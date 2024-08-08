@@ -8,10 +8,10 @@ export const addToWishList = asyncHandler(async (req, res) => {
 });
 
 export const getWishList = asyncHandler(async (req, res) => {
-  const wishList = await wishlistService.getWishList(req.query, req.user);
+  const result = await wishlistService.getWishList(req.query, req.user);
   return res
     .status(200)
-    .json(createResponse(200, { total: wishList.length, wishList }));
+    .json(createResponse(200, result));
 });
 
 export const removeFromWishList = asyncHandler(async (req, res) => {

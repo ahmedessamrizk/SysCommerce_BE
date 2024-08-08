@@ -27,17 +27,24 @@ export const addToWishList = async (product, currUser) => {
 export const getWishList = async (query, currUser) => {
   const { limit, skip } = paginate(query.page, query.size);
 
-  return await wishlistModel
-    .find({ user: currUser._id })
-    .limit(limit)
-    .skip(skip)
-    .populate([
-      {
-        path: 'product',
-        select: 'name'
-      }
-    ])
-    .select('product');
+  const [products, totalProducts] = await Promise.all([
+    wishlistModel
+      .find({ user: currUser._id })
+      .limit(limit)
+      .skip(skip)
+      .populate([
+        {
+          path: 'product',
+          select: 'name'
+        }
+      ])
+      .select('product'),
+    wishlistModel.countDocuments({ user: currUser._id })
+  ]);
+
+  // Calculate the number of pages available
+  const totalPages = Math.ceil(totalProducts / limit);
+  return { total: products.length, totalPages, products };
 };
 
 export const removeFromWishList = async (product, currUser) => {

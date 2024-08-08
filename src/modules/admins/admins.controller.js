@@ -9,10 +9,10 @@ export const createAdmin = asyncHandler(async (req, res) => {
 });
 
 export const getAdmins = asyncHandler(async (req, res) => {
-  const admins = await adminsService.getAdmins(req.query, req.user);
+  const result = await adminsService.getAdmins(req.query, req.user);
   return res
     .status(200)
-    .json(createResponse(200, { total: admins.length, admins }));
+    .json(createResponse(200, result));
 });
 
 export const updateRole = asyncHandler(async (req, res) => {
