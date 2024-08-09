@@ -17,5 +17,10 @@ export const updateRole = async (id, role) => {
 };
 
 export const removeAdmin = async (id, isDeleted) => {
-  return await usersService.removeUser(id, roles.Admin, isDeleted);
+  const roleToDelete = await usersService.getUser({ _id: id }, 'role');
+  if (!roleToDelete || roleToDelete.role === roles.SuperAdmin) {
+    throw new Error('User not found', { cause: 404 });
+  }
+
+  return await usersService.removeUser(id, roleToDelete.role, isDeleted);
 };
