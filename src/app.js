@@ -9,7 +9,7 @@ import { makeAdmin } from './utils/makeAdmin.js';
 export const appRouter = app => {
   app.use(
     cors({
-      origin: process.env.frontendBaseURL,
+      origin: true,
       credentials: true
     })
   );
