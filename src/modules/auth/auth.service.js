@@ -23,6 +23,7 @@ export const signUp = async req => {
 };
 
 const sendEmailtoUser = async req => {
+  //generate token for confirmation
   const token = jwt.sign({ email: req.body.email }, process.env.SIGNUPKEY, {
     expiresIn: '24h'
   });

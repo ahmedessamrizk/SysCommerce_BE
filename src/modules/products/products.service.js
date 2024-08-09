@@ -46,7 +46,7 @@ export const getProducts = async query => {
 
   // Calculate the number of pages available
   const totalPages = Math.ceil(totalProducts / limit);
-  return { total: products.length, totalPages, products };
+  return { total: totalProducts, totalPages, products };
 };
 
 export const updateProduct = async (id, product, currUser) => {

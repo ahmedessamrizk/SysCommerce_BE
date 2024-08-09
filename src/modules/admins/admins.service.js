@@ -13,7 +13,12 @@ export const getAdmins = async (query, currUser) => {
   if (currUser.role === roles.Admin) {
     select = ' -isDeleted -role';
   }
-  return await usersService.getUsers(query, roles.Admin, select);
+  const { total, totalPages, admins } = await usersService.getUsers(
+    query,
+    roles.Admin,
+    select
+  );
+  return { total, totalPages, admins };
 };
 
 export const updateRole = async (id, role) => {
@@ -21,6 +26,5 @@ export const updateRole = async (id, role) => {
 };
 
 export const removeAdmin = async (id, isDeleted) => {
-  //TODO: need to delete all categories, created by this admin.
   return await usersService.removeUser(id, roles.Admin, isDeleted);
 };

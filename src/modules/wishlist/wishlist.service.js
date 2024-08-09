@@ -44,7 +44,7 @@ export const getWishList = async (query, currUser) => {
 
   // Calculate the number of pages available
   const totalPages = Math.ceil(totalProducts / limit);
-  return { total: products.length, totalPages, products };
+  return { total: totalProducts, totalPages, products };
 };
 
 export const removeFromWishList = async (product, currUser) => {

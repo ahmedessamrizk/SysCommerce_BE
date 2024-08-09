@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import { makeAdmin } from './utils/makeAdmin.js';
 
 export const appRouter = app => {
+  //setup middlewares
   app.use(cookieParser());
   app.use(
     cors({
@@ -20,7 +21,7 @@ export const appRouter = app => {
   //connect database
   connectDB();
 
-  //Make Super Admin
+  //Intialize superAdmin account when start the server
   makeAdmin();
 
   //Api Setup

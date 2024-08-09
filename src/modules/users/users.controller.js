@@ -8,7 +8,8 @@ export const getProfile = asyncHandler(async (req, res) => {
 });
 
 export const logout = asyncHandler(async (req, res) => {
-  return res.clearCookie('token').json(createResponse(200));
+  res.clearCookie('token');
+  return res.json(createResponse(200));
 });
 
 export const getUsers = asyncHandler(async (req, res) => {

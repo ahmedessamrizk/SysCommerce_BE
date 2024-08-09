@@ -53,7 +53,7 @@ export const getCategories = async query => {
 
   const formatedCategories = await reformatCategories(categories);
   return {
-    total: categories.length,
+    total: totalCategories,
     totalPages,
     categories: formatedCategories
   };

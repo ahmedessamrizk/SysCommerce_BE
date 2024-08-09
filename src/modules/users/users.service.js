@@ -56,7 +56,7 @@ export const getUsers = async (query, role = roles.User, select = '') => {
 
   // Calculate the number of pages available
   const totalPages = Math.ceil(totalUsers / limit);
-  return { total: users.length, totalPages, admins: users };
+  return { total: totalUsers, totalPages, users };
 };
 
 export const removeUser = async (id, roleToDelete, isDeleted = true) => {
