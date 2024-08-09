@@ -16,8 +16,8 @@ router.post(
 router.get(
   '/',
   validation(adminsValidators.getAdminsSchema),
-  auth([roles.Admin, roles.SuperAdmin]),
-  adminsController.getAdmins
+  auth([roles.SuperAdmin]),
+  adminsController.getAll
 );
 
 router.patch(

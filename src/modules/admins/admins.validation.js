@@ -36,6 +36,10 @@ export const getAdminsSchema = {
     size: yup
       .string()
       .matches(/^\d+$/, 'size must be a number')
+      .optional(),
+    role: yup
+      .string()
+      .matches(/^(Admin|User)$/, 'role must be either Admin or User')
       .optional()
   })
 };

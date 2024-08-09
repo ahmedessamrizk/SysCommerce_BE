@@ -112,7 +112,7 @@ const checkProductOwnership = async (id, currUser) => {
   if (!productExist) {
     return {
       status: false,
-      message: 'product not found or you arent authorized',
+      message: 'product not found or you aren\'t authorized',
       cause: 400
     };
   }

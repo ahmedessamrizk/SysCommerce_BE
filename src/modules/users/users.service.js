@@ -42,16 +42,39 @@ export const updateUser = async (
   return user;
 };
 
-export const getUsers = async (query, role = roles.User, select = '') => {
+export const getUsers = async query => {
   const { limit, skip } = paginate(query.page, query.size);
   // Start fetching users and total count concurrently
   const [users, totalUsers] = await Promise.all([
     userModel
-      .find({ role, isConfirmed: true })
+      .find({ isConfirmed: true, role: roles.User })
       .limit(limit)
       .skip(skip)
-      .select(privateData + select),
-    userModel.countDocuments({ role, isConfirmed: true })
+      .select(privateData),
+    userModel.countDocuments({ isConfirmed: true })
+  ]);
+
+  // Calculate the number of pages available
+  const totalPages = Math.ceil(totalUsers / limit);
+  return { total: totalUsers, totalPages, users };
+};
+
+export const getAll = async query => {
+  const { limit, skip } = paginate(query.page, query.size);
+  const send_query = { isConfirmed: true };
+
+  if (query.role) {
+    send_query.role = query.role;
+  }
+
+  // Start fetching users and total count concurrently
+  const [users, totalUsers] = await Promise.all([
+    userModel
+      .find(send_query)
+      .limit(limit)
+      .skip(skip)
+      .select(privateData),
+    userModel.countDocuments({ isConfirmed: true })
   ]);
 
   // Calculate the number of pages available

@@ -8,8 +8,8 @@ export const createAdmin = asyncHandler(async (req, res) => {
   return res.status(201).json(createResponse(201));
 });
 
-export const getAdmins = asyncHandler(async (req, res) => {
-  const result = await adminsService.getAdmins(req.query, req.user);
+export const getAll = asyncHandler(async (req, res) => {
+  const result = await adminsService.get(req.query);
   return res.status(200).json(createResponse(200, result));
 });
 

@@ -7,18 +7,9 @@ export const create = async admin => {
   return await usersService.createUser(admin);
 };
 
-export const getAdmins = async (query, currUser) => {
-  let select = '';
-
-  if (currUser.role === roles.Admin) {
-    select = ' -isDeleted -role';
-  }
-  const { total, totalPages, users } = await usersService.getUsers(
-    query,
-    roles.Admin,
-    select
-  );
-  return { total, totalPages, admins: users };
+export const get = async query => {
+  const { total, totalPages, users } = await usersService.getAll(query);
+  return { total, totalPages, users };
 };
 
 export const updateRole = async (id, role) => {
