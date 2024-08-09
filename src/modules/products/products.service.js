@@ -20,6 +20,7 @@ export const createProduct = async (product, currUser) => {
 export const getProducts = async query => {
   const send_query = {};
 
+  //filter by category
   if (query.category) {
     //check category exist
     const checkCategory = await categoriesService.checkValidCategory({
@@ -29,6 +30,11 @@ export const getProducts = async query => {
       throw new Error(checkCategory.message, { cause: checkCategory.cause });
     }
     send_query.category = checkCategory._id;
+  }
+
+  //filter by creator
+  if (query.createdBy) {
+    send_query.createdBy = query.createdBy;
   }
 
   const { limit, skip } = paginate(query.page, query.size);
