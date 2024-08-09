@@ -13,12 +13,12 @@ export const getAdmins = async (query, currUser) => {
   if (currUser.role === roles.Admin) {
     select = ' -isDeleted -role';
   }
-  const { total, totalPages, admins } = await usersService.getUsers(
+  const { total, totalPages, users } = await usersService.getUsers(
     query,
     roles.Admin,
     select
   );
-  return { total, totalPages, admins };
+  return { total, totalPages, admins: users };
 };
 
 export const updateRole = async (id, role) => {
