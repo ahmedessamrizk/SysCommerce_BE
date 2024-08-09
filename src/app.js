@@ -7,15 +7,15 @@ import cookieParser from 'cookie-parser';
 import { makeAdmin } from './utils/makeAdmin.js';
 
 export const appRouter = app => {
+  app.use(cookieParser());
   app.use(
     cors({
-      origin: true,
+      origin: process.env.frontendBaseURL,
       credentials: true
     })
   );
-  app.use(cookieParser());
   app.use(express.json({}));
-  app.use(express.urlencoded({ extended: true }));
+  app.use(express.urlencoded({ extended: false }));
 
   //connect database
   connectDB();
