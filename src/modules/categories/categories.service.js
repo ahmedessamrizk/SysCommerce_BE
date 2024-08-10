@@ -3,7 +3,7 @@ import { categoryModel } from '../../../DB/models/category.model.js';
 import { paginate } from '../../utils/pagination.js';
 import * as productsService from '../products/products.service.js';
 
-const privateData = '-createdBy -__v -type';
+const privateData = '-__v -type';
 
 export const getCategory = async query => {
   return await categoryModel.findOne(query);
@@ -37,25 +37,33 @@ export const create = async (category, currUser) => {
 };
 
 export const getCategories = async query => {
+  //in case of getting all categories for admin panel, don't format the categories.
+  let send_query = query.format.toLowerCase() === 'true' ? { type: 0 } : {};
   const { limit, skip } = paginate(query.page, query.size);
 
   const [categories, totalCategories] = await Promise.all([
     categoryModel
-      .find({ type: 0 })
+      .find(send_query)
       .limit(limit)
       .skip(skip)
-      .select(privateData),
-    categoryModel.countDocuments({ type: 0 })
+      .select(privateData)
+      .populate({ path: 'createdBy', select: 'userName email' }),
+    categoryModel.countDocuments(send_query)
   ]);
 
   // Calculate the number of pages available
   const totalPages = Math.ceil(totalCategories / limit);
+  let result = categories;
 
-  const formatedCategories = await reformatCategories(categories);
+  //reformat categories if format query is true
+  if (query.format.toLowerCase() === 'true') {
+    result = await reformatCategories(categories);
+  }
+
   return {
     total: totalCategories,
     totalPages,
-    categories: formatedCategories
+    categories: result
   };
 };
 
@@ -108,13 +116,9 @@ export const checkValidCategory = async query => {
   return { status: true, _id: category._id };
 };
 
-const getAllCategories = async query => {
-  return await categoryModel.find(query).select(privateData);
-};
-
 const reformatCategories = async paginatedCategories => {
   //get all subcategories
-  const categories = await getAllCategories({
+  const categories = await categoryModel.find({
     type: { $in: [1, 2] }
   });
 
