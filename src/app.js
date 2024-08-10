@@ -11,10 +11,7 @@ export const appRouter = app => {
   app.use(cookieParser());
   app.use(
     cors({
-      origin: [
-        'https://auvnet-assessment.netlify.app',
-        process.env.frontendBaseURL
-      ],
+      origin: [process.env.frontendBaseURL],
       credentials: true
     })
   );
