@@ -35,7 +35,13 @@ export const getWishList = async (query, currUser) => {
       .populate([
         {
           path: 'product',
-          select: 'name'
+          select: 'name description category',
+          populate: [
+            {
+              select: 'name',
+              path: 'category'
+            }
+          ]
         }
       ])
       .select('product'),
