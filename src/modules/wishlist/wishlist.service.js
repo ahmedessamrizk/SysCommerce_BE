@@ -27,7 +27,7 @@ export const addToWishList = async (product, currUser) => {
 export const getWishList = async (query, currUser) => {
   const { limit, skip } = paginate(query.page, query.size);
 
-  const [products, totalProducts] = await Promise.all([
+  const [wishlist, totalProducts] = await Promise.all([
     wishlistModel
       .find({ user: currUser._id })
       .limit(limit)
@@ -44,7 +44,7 @@ export const getWishList = async (query, currUser) => {
 
   // Calculate the number of pages available
   const totalPages = Math.ceil(totalProducts / limit);
-  return { total: totalProducts, totalPages, products };
+  return { total: totalProducts, totalPages, wishlist };
 };
 
 export const removeFromWishList = async (product, currUser) => {
