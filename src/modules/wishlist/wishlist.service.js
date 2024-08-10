@@ -38,7 +38,7 @@ export const getWishList = async (query, currUser) => {
           select: 'name'
         }
       ])
-      .select('product'),
+      .select('product -_id'),
     wishlistModel.countDocuments({ user: currUser._id })
   ]);
 
