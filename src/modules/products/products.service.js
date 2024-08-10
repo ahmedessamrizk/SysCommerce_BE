@@ -47,7 +47,7 @@ export const getProducts = async query => {
         { path: 'category', select: 'name slug' },
         { path: 'createdBy', select: 'userName email' }
       ]),
-    productModel.countDocuments()
+    productModel.find(send_query).countDocuments()
   ]);
 
   // Calculate the number of pages available
@@ -112,7 +112,7 @@ const checkProductOwnership = async (id, currUser) => {
   if (!productExist) {
     return {
       status: false,
-      message: 'product not found or you aren\'t authorized',
+      message: "product not found or you aren't authorized",
       cause: 400
     };
   }
