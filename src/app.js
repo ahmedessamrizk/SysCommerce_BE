@@ -11,7 +11,10 @@ export const appRouter = app => {
   app.use(cookieParser());
   app.use(
     cors({
-      origin: [process.env.frontendBaseURL, 'https://app.swaggerhub.com'],
+      origin: [
+        process.env.frontendBaseURL,
+        'https://auvnet-assessment.netlify.app/'
+      ],
       credentials: true
     })
   );
