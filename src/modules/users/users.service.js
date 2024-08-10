@@ -51,7 +51,7 @@ export const getUsers = async query => {
       .limit(limit)
       .skip(skip)
       .select(privateData),
-    userModel.countDocuments({ isConfirmed: true })
+    userModel.countDocuments({ isConfirmed: true, role: roles.User })
   ]);
 
   // Calculate the number of pages available
