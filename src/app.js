@@ -9,15 +9,7 @@ import { makeAdmin } from './utils/makeAdmin.js';
 export const appRouter = app => {
   //setup middlewares
   app.use(cookieParser());
-  app.use(
-    cors({
-      origin: [
-        process.env.frontendBaseURL,
-        'https://auvnet-assessment.netlify.app/'
-      ],
-      credentials: true
-    })
-  );
+  app.use(cors({}));
   app.use(express.json({}));
   app.use(express.urlencoded({ extended: false }));
 
