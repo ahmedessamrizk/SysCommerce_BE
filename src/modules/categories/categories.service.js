@@ -38,7 +38,7 @@ export const create = async (category, currUser) => {
 
 export const getCategories = async query => {
   //in case of getting all categories for admin panel, don't format the categories.
-  let send_query = query.format.toLowerCase() === 'true' ? { type: 0 } : {};
+  let send_query = query.format?.toLowerCase() === 'true' ? { type: 0 } : {};
   const { limit, skip } = paginate(query.page, query.size);
 
   const [categories, totalCategories] = await Promise.all([
@@ -56,7 +56,7 @@ export const getCategories = async query => {
   let result = categories;
 
   //reformat categories if format query is true
-  if (query.format.toLowerCase() === 'true') {
+  if (query.format?.toLowerCase() === 'true') {
     result = await reformatCategories(categories);
   }
 
