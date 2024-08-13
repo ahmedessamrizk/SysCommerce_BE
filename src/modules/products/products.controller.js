@@ -12,6 +12,14 @@ export const getProducts = asyncHandler(async (req, res) => {
   return res.status(200).json(createResponse(200, result));
 });
 
+export const getProduct = asyncHandler(async (req, res) => {
+  const product = await productsService.getProduct({ _id: req.params.id });
+  if (!product) {
+    throw Error('Product not found', { cause: 404 });
+  }
+  return res.status(200).json(createResponse(200, { product }));
+});
+
 export const updateProduct = asyncHandler(async (req, res) => {
   const product = await productsService.updateProduct(
     req.params.id,

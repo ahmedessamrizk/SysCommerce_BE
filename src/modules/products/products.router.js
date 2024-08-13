@@ -19,6 +19,12 @@ router.get(
   productsController.getProducts
 );
 
+router.get(
+  '/:id',
+  validation(productsValidators.getProductsSchema),
+  productsController.getProduct
+);
+
 router.patch(
   '/:id',
   validation(productsValidators.updateProductSchema),

@@ -16,6 +16,19 @@ export const createCategorySchema = {
     .strict()
 };
 
+export const getCategoriesSchema = {
+  query: yup.object().shape({
+    page: yup.number().min(1),
+    size: yup.number().min(1)
+  })
+};
+
+export const getCategorySchema = {
+  params: yup.object().shape({
+    id: objectIdSchema
+  })
+};
+
 export const updateCategorySchema = {
   params: yup.object().shape({
     id: objectIdSchema

@@ -15,7 +15,7 @@ export const get = async query => {
 
 export const getPanelCategories = async () => {
   return await categoriesService.getAllCategories();
-}
+};
 
 export const updateRole = async (id, role) => {
   return await usersService.updateRole(id, role);

@@ -13,7 +13,17 @@ router.post(
   categoriesController.createCategory
 );
 
-router.get('/', categoriesController.getCategories);
+router.get(
+  '/',
+  validation(categoriesValidators.getCategoriesSchema),
+  categoriesController.getCategories
+);
+
+router.get(
+  '/:id',
+  validation(categoriesValidators.getCategorySchema),
+  categoriesController.getCategory
+);
 
 router.patch(
   '/:id',

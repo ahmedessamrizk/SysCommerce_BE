@@ -49,3 +49,9 @@ export const getProductsSchema = {
     size: yup.number().min(1)
   })
 };
+
+export const getProductSchema = {
+  params: yup.object().shape({
+    id: objectIdSchema.required()
+  })
+};

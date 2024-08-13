@@ -16,6 +16,11 @@ export const getCategories = asyncHandler(async (req, res) => {
   return res.status(200).json(createResponse(200, result));
 });
 
+export const getCategory = asyncHandler(async (req, res) => {
+  const result = await categoriesService.getCategory({ _id: req.params.id });
+  return res.status(200).json(createResponse(200, { category: result }));
+});
+
 export const updateCategory = asyncHandler(async (req, res) => {
   const category = await categoriesService.updateCategory(
     req.params.id,

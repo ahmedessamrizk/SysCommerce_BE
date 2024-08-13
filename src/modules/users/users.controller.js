@@ -8,7 +8,7 @@ export const getProfile = asyncHandler(async (req, res) => {
 });
 
 export const logout = asyncHandler(async (req, res) => {
-  res.clearCookie('token',{
+  res.clearCookie('token', {
     httpOnly: true,
     sameSite: 'none',
     secure: true
@@ -20,6 +20,18 @@ export const getUsers = asyncHandler(async (req, res) => {
   const { page, size } = req.query;
   const result = await usersService.getUsers({ page, size });
   return res.json(createResponse(200, result));
+});
+
+export const getUser = asyncHandler(async (req, res) => {
+  const user = await usersService.getUser(
+    { _id: req.params.id },
+    '-password -__v -isConfirmed'
+  );
+
+  if (!user) {
+    throw new Error('User not found', { cause: 404 });
+  }
+  return res.json(createResponse(200, { user }));
 });
 
 export const removeUser = asyncHandler(async (req, res) => {

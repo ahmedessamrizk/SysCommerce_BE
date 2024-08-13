@@ -25,6 +25,13 @@ router.get(
   usersController.getUsers
 );
 
+router.get(
+  '/:id',
+  validation(usersValidators.getUserSchema),
+  auth([roles.Admin, roles.SuperAdmin]),
+  usersController.getUser
+);
+
 router.patch(
   '/:id/remove',
   validation(usersValidators.removeUserSchema),

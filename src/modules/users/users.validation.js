@@ -13,6 +13,15 @@ export const getUsersSchema = {
   })
 };
 
+export const getUserSchema = {
+  params: yup.object().shape({
+    id: yup
+      .string()
+      .required('id is required')
+      .matches(/^[0-9a-fA-F]{24}$/, 'Invalid Object Id')
+  })
+};
+
 export const removeUserSchema = {
   params: yup.object().shape({
     id: yup
