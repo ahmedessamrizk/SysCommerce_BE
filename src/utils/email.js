@@ -21,7 +21,7 @@ export const sendEmail = async (email, subject, html, attachments) => {
       html,
       attachments
     });
-    console.log(info);
+
     return info;
   } catch (error) {
     console.log('Catch error!', error);
