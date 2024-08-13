@@ -11,7 +11,7 @@ export const appRouter = app => {
   app.use(cookieParser());
   app.use(
     cors({
-      origin: [""],
+      origin: process.env.frontendBaseURL,
       credentials: true
     })
   );
