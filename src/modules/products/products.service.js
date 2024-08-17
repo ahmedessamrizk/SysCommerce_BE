@@ -26,10 +26,17 @@ export const getProducts = async query => {
     const checkCategory = await categoriesService.checkValidCategory({
       slug: query.category
     });
+
     if (!checkCategory.status) {
       throw new Error(checkCategory.message, { cause: checkCategory.cause });
     }
-    send_query.category = checkCategory._id;
+
+    // Get all subcategories and sub-subcategories
+    const allCategoryIds = await categoriesService.getAllSubCategories(
+      checkCategory._id
+    );
+
+    send_query.category = { $in: allCategoryIds };
   }
 
   //filter by creator

@@ -149,3 +149,24 @@ const reformatCategories = async paginatedCategories => {
 
   return result;
 };
+
+export const getAllSubCategories = async categoryId => {
+  const categories = [];
+  categories.push(categoryId);
+  const getSubCategories = async parentId => {
+    // Find all subcategories of the current parentId
+    const subcategories = await categoryModel
+      .find({ parentCategory: parentId })
+      .select('_id');
+
+    // Add subcategories to the list
+    for (const subcategory of subcategories) {
+      categories.push(subcategory._id);
+      // Recursively find sub-subcategories
+      await getSubCategories(subcategory._id);
+    }
+  };
+
+  await getSubCategories(categoryId);
+  return categories;
+};
