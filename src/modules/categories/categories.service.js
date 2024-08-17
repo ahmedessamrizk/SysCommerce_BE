@@ -153,6 +153,7 @@ const reformatCategories = async paginatedCategories => {
 export const getAllSubCategories = async categoryId => {
   const categories = [];
   categories.push(categoryId);
+  
   const getSubCategories = async parentId => {
     // Find all subcategories of the current parentId
     const subcategories = await categoryModel

@@ -17,14 +17,10 @@ export const createCategorySchema = {
 };
 
 export const getCategoriesSchema = {
-  query: yup
-    .object()
-    .shape({
-      page: yup.number().min(1),
-      size: yup.number().min(1)
-    })
-    .noUnknown(true, 'Unknown field in request body')
-    .strict()
+  query: yup.object().shape({
+    page: yup.number().min(1),
+    size: yup.number().min(1)
+  })
 };
 
 export const getCategorySchema = {
