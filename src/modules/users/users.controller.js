@@ -8,16 +8,17 @@ export const getProfile = asyncHandler(async (req, res) => {
 });
 
 export const logout = asyncHandler(async (req, res) => {
-  res.clearCookie('token', {
-    httpOnly: true, // Prevents client-side scripts from accessing the cookie
-    sameSite: 'none', // Helps prevent CSRF attacks
-    secure: true, // Ensures the cookie is sent over HTTPS in production
-    path: '/' // Scope of the cookie
-  });
+  // res.clearCookie('token', {
+  //   httpOnly: true, // Prevents client-side scripts from accessing the cookie
+  //   sameSite: 'none', // Helps prevent CSRF attacks
+  //   secure: true, // Ensures the cookie is sent over HTTPS in production
+  //   path: '/' // Scope of the cookie
+  // });
   res.cookie('token2222222', 'test', {
     httpOnly: true,
     sameSite: 'none',
-    secure: true
+    secure: true,
+    path: '/'
   });
   return res.json(createResponse(200));
 });
