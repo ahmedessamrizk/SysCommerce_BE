@@ -28,7 +28,7 @@ export const signIn = asyncHandler(async (req, res, next) => {
 
   res.cookie('token', token, {
     httpOnly: true,
-    sameSite: 'none',
+    sameSite: 'strict',
     secure: true,
     expires: new Date(Date.now() + 24 * 3600000)
   });

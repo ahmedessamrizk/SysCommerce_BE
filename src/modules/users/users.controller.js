@@ -10,7 +10,7 @@ export const getProfile = asyncHandler(async (req, res) => {
 export const logout = asyncHandler(async (req, res) => {
   res.clearCookie('token', {
     httpOnly: true,
-    sameSite: 'none',
+    sameSite: 'strict',
     secure: true,
     path: '/'
   });
