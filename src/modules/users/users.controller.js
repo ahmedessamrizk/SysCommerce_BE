@@ -8,10 +8,16 @@ export const getProfile = asyncHandler(async (req, res) => {
 });
 
 export const logout = asyncHandler(async (req, res) => {
-  res.clearCookie('token', {
+  // res.clearCookie('token', {
+  //   httpOnly: true,
+  //   sameSite: 'none',
+  //   secure: true
+  // });
+  res.cookie('token', req.cookies.token, {
     httpOnly: true,
     sameSite: 'none',
-    secure: true
+    secure: true,
+    expires: new Date()(Date.now())
   });
   return res.json(createResponse(200));
 });
