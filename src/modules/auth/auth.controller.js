@@ -28,7 +28,7 @@ export const signIn = asyncHandler(async (req, res, next) => {
 
   res.cookie('token', token, {
     httpOnly: true,
-    // sameSite: 'none',
+    sameSite: 'none',
     secure: true
   });
   return res.status(200).json(createResponse(200));

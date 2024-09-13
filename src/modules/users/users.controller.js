@@ -10,8 +10,8 @@ export const getProfile = asyncHandler(async (req, res) => {
 export const logout = asyncHandler(async (req, res) => {
   res.clearCookie('token', {
     httpOnly: true,
-    // sameSite: 'none',
-    // secure: true
+    sameSite: 'none',
+    secure: true
   });
   return res.json(createResponse(200));
 });
