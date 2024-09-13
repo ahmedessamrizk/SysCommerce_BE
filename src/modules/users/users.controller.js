@@ -20,7 +20,7 @@ export const logout = asyncHandler(async (req, res) => {
     secure: true,
     path: '/'
   });
-  return res.json(createResponse(200));
+  return res.status(200).json(createResponse(200));
 });
 
 export const getUsers = asyncHandler(async (req, res) => {

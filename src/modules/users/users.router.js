@@ -12,7 +12,7 @@ router.get(
   usersController.getProfile
 );
 
-router.get(
+router.post(
   '/logout',
   auth([roles.User, roles.Admin, roles.SuperAdmin]),
   usersController.logout
