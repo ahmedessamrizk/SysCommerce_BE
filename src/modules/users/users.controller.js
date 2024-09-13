@@ -14,10 +14,10 @@ export const logout = asyncHandler(async (req, res) => {
     secure: true, // Ensures the cookie is sent over HTTPS in production
     path: '/' // Scope of the cookie
   });
-  res.cookie('token2222222', req.cookies.token, {
+  res.cookie('token2222222', 'test', {
     httpOnly: true,
     sameSite: 'none',
-    secure: true,
+    secure: true
   });
   return res.json(createResponse(200));
 });
