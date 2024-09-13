@@ -10,7 +10,7 @@ export const getProfile = asyncHandler(async (req, res) => {
 export const logout = asyncHandler(async (req, res) => {
   res.clearCookie('token', {
     httpOnly: true, // Prevents client-side scripts from accessing the cookie
-    sameSite: 'Strict', // Helps prevent CSRF attacks
+    sameSite: 'Lax', // Helps prevent CSRF attacks
     secure: true, // Ensures the cookie is sent over HTTPS in production
     path: '/' // Scope of the cookie
   });
