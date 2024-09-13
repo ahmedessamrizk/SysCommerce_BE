@@ -17,7 +17,7 @@ export const logout = asyncHandler(async (req, res) => {
     httpOnly: true,
     sameSite: 'none',
     secure: true,
-    expires: new Date()(Date.now())
+    expires: new Date(Date.now())
   });
   return res.json(createResponse(200));
 });
