@@ -40,7 +40,7 @@ This project is a full-stack web application designed for managing products, cat
 - Data validation is handled by the `yup` library on both the frontend and backend.
 
 ## ERD
-![ERD](https://drive.google.com/uc?export=view&id=1rxh7-thWvekmOD-j3CR4AKlxy3KRjYRc)
+<img width="932" height="696" alt="ERD for sysCommerce" src="https://github.com/user-attachments/assets/b486fb02-7518-43e3-aff0-63beacb4ff0e" />
 
 ## Technologies Used
 - **ExpressJs** - as the backend framework to handle routing and server logic.
